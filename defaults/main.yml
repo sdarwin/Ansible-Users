@@ -1,0 +1,18 @@
+---
+# List of users to create. Each entry is a dict:
+#
+# users:
+#   - name: alice
+#     ssh_key: "ssh-ed25519 AAAA... alice@laptop"
+#     groups: [sudo]
+#   - name: bob
+#     ssh_key: "ssh-rsa AAAA... bob@desktop"
+#     groups: []
+#
+# "groups" is optional (defaults to no extra groups).
+# "ssh_key" is optional; may contain multiple keys separated by newlines.
+users: []
+
+# When true, install /etc/sudoers.d/91-sudo-users granting the "sudo"
+# group passwordless sudo (mirrors AWS's 90-cloud-init-users style).
+users_sudo_nopasswd: true

@@ -1,0 +1,31 @@
+---
+- name: Create user accounts
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    groups: "{{ item.groups | default([]) }}"
+    append: true
+    shell: /bin/bash
+    create_home: true
+  loop: "{{ users }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Install SSH authorized keys
+  ansible.posix.authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ item.ssh_key }}"
+  loop: "{{ users }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.ssh_key is defined
+
+- name: Allow passwordless sudo for the sudo group
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/91-sudo-users
+    content: |
+      %sudo ALL=(ALL) NOPASSWD:ALL
+    owner: root
+    group: root
+    mode: "0440"
+    validate: /usr/sbin/visudo -cf %s
+  when: users_sudo_nopasswd | bool
