@@ -1,0 +1,6 @@
+---
+- name: Install Users
+  hosts: newservers:!windows
+  become: true
+  roles:
+    - {role: 'sdarwin.users'}
