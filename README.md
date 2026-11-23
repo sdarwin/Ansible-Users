@@ -28,7 +28,7 @@ Each entry in `users`:
 |---|---|---|
 | `name` | yes | Username. |
 | `ssh_key` | no | Public key string; multiple keys can be separated by newlines. |
-| `groups` | no | Extra groups. Put `sudo` here to grant sudo. |
+| `groups` | no | Extra groups (created if missing). Put `sudo` here to grant sudo. |
 
 ## Example (host_vars/myhost.yml)
 

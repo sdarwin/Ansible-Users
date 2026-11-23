@@ -1,4 +1,10 @@
 ---
+- name: Ensure supplementary groups exist
+  ansible.builtin.group:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ users | map(attribute='groups', default=[]) | flatten | unique }}"
+
 - name: Create user accounts
   ansible.builtin.user:
     name: "{{ item.name }}"
